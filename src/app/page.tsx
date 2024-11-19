@@ -6,7 +6,7 @@ import { Search, ShoppingCart, User, ChevronDown } from 'lucide-react'
 
 export default function Homepage() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
-  const [searchOpen, setSearchOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const toggleDropdown = (menu: string) => {
     setActiveDropdown(activeDropdown === menu ? null : menu)
@@ -15,10 +15,12 @@ export default function Homepage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 bg-white shadow-sm z-40">
+      <header className="fixed top-0 left-0 right-0 bg-white shadow-sm z-50">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
-            <Link href="/" className=" text-black text-2xl font-bold">YourBrand</Link>
+            <Link href="/" className="text-black text-2xl font-bold">YourBrand</Link>
+
+            {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8 relative">
               <div className="relative">
                 <button 
@@ -28,7 +30,7 @@ export default function Homepage() {
                   Women <ChevronDown className="ml-1 h-4 w-4" />
                 </button>
                 {activeDropdown === 'women' && (
-                  <div className="absolute top-full left-0 bg-white shadow-lg rounded-lg p-4 w-48">
+                  <div className="absolute top-full left-0 bg-white shadow-lg rounded-lg p-4 w-48 z-50">
                     <ul className="space-y-2">
                       <li><Link href="/women/dresses" className="text-gray-600 hover:text-gray-900">Dresses</Link></li>
                       <li><Link href="/women/tops" className="text-gray-600 hover:text-gray-900">Tops</Link></li>
@@ -46,7 +48,7 @@ export default function Homepage() {
                   Men <ChevronDown className="ml-1 h-4 w-4" />
                 </button>
                 {activeDropdown === 'men' && (
-                  <div className="absolute top-full left-0 bg-white shadow-lg rounded-lg p-4 w-48">
+                  <div className="absolute top-full left-0 bg-white shadow-lg rounded-lg p-4 w-48 z-50">
                     <ul className="space-y-2">
                       <li><Link href="/men/shirts" className="text-gray-600 hover:text-gray-900">Shirts</Link></li>
                       <li><Link href="/men/pants" className="text-gray-600 hover:text-gray-900">Pants</Link></li>
@@ -64,7 +66,7 @@ export default function Homepage() {
                   Accessories <ChevronDown className="ml-1 h-4 w-4" />
                 </button>
                 {activeDropdown === 'accessories' && (
-                  <div className="absolute top-full left-0 bg-white shadow-lg rounded-lg p-4 w-48">
+                  <div className="absolute top-full left-0 bg-white shadow-lg rounded-lg p-4 w-48 z-50">
                     <ul className="space-y-2">
                       <li><Link href="/accessories/bags" className="text-gray-600 hover:text-gray-900">Bags</Link></li>
                       <li><Link href="/accessories/jewelry" className="text-gray-600 hover:text-gray-900">Jewelry</Link></li>
@@ -82,7 +84,7 @@ export default function Homepage() {
                   Sale <ChevronDown className="ml-1 h-4 w-4" />
                 </button>
                 {activeDropdown === 'sale' && (
-                  <div className="absolute top-full left-0 bg-white shadow-lg rounded-lg p-4 w-48">
+                  <div className="absolute top-full left-0 bg-white shadow-lg rounded-lg p-4 w-48 z-50">
                     <ul className="space-y-2">
                       <li><Link href="/sale/clearance" className="text-gray-600 hover:text-gray-900">Clearance</Link></li>
                       <li><Link href="/sale/last-chance" className="text-gray-600 hover:text-gray-900">Last Chance</Link></li>
@@ -92,47 +94,153 @@ export default function Homepage() {
                 )}
               </div>
             </nav>
-            <div className="flex items-center space-x-4">
-              <button 
-                onClick={() => setSearchOpen(!searchOpen)}
-                className="p-2 hover:bg-gray-100 rounded-lg transition duration-200"
-              >
-                <Search className="h-6 w-6" />
-              </button>
-              <button className="p-2 hover:bg-gray-100 rounded-lg transition duration-200">
+
+            {/* Desktop Icons */}
+            <div className="hidden md:flex items-center space-x-4">
+              <Link href="/cart" className="text-gray-600 hover:text-gray-900">
                 <ShoppingCart className="h-6 w-6" />
-              </button>
-              <button className="p-2 hover:bg-gray-100 rounded-lg transition duration-200">
+              </Link>
+              <button className="text-gray-600 hover:text-gray-900">
                 <User className="h-6 w-6" />
               </button>
+            </div>
+
+            {/* Mobile hamburger button */}
+            <button 
+              className="md:hidden p-2 text-gray-600 hover:text-gray-900"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Navigation Overlay */}
+        <div className={`fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300 md:hidden ${mobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          <div 
+            className={`fixed inset-y-0 right-0 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="p-4">
+              <button 
+                className="absolute top-4 right-4 text-gray-600 hover:text-gray-900"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+
+              <nav className="mt-8">
+                <div className="space-y-4">
+                  {/* Mobile Icons */}
+                  <div className="space-y-4 pb-4 border-b border-gray-200">
+                    <div className="flex justify-around">
+                      <Link href="/cart" className="text-black hover:text-gray-700">
+                        <ShoppingCart className="h-6 w-6" />
+                      </Link>
+                      <button className="text-black hover:text-gray-700">
+                        <User className="h-6 w-6" />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Women */}
+                  <div>
+                    <button 
+                      onClick={() => toggleDropdown('women')}
+                      className="flex items-center justify-between w-full text-gray-600 hover:text-gray-900 py-2"
+                    >
+                      Women <ChevronDown className="ml-1 h-4 w-4" />
+                    </button>
+                    {activeDropdown === 'women' && (
+                      <div className="pl-4 pt-2 space-y-2">
+                        <Link href="/women/dresses" className="block text-gray-600 hover:text-gray-900">Dresses</Link>
+                        <Link href="/women/tops" className="block text-gray-600 hover:text-gray-900">Tops</Link>
+                        <Link href="/women/bottoms" className="block text-gray-600 hover:text-gray-900">Bottoms</Link>
+                        <Link href="/women/accessories" className="block text-gray-600 hover:text-gray-900">Accessories</Link>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Men */}
+                  <div>
+                    <button 
+                      onClick={() => toggleDropdown('men')}
+                      className="flex items-center justify-between w-full text-gray-600 hover:text-gray-900 py-2"
+                    >
+                      Men <ChevronDown className="ml-1 h-4 w-4" />
+                    </button>
+                    {activeDropdown === 'men' && (
+                      <div className="pl-4 pt-2 space-y-2">
+                        <Link href="/men/shirts" className="block text-gray-600 hover:text-gray-900">Shirts</Link>
+                        <Link href="/men/pants" className="block text-gray-600 hover:text-gray-900">Pants</Link>
+                        <Link href="/men/outerwear" className="block text-gray-600 hover:text-gray-900">Outerwear</Link>
+                        <Link href="/men/accessories" className="block text-gray-600 hover:text-gray-900">Accessories</Link>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Accessories */}
+                  <div>
+                    <button 
+                      onClick={() => toggleDropdown('accessories')}
+                      className="flex items-center justify-between w-full text-gray-600 hover:text-gray-900 py-2"
+                    >
+                      Accessories <ChevronDown className="ml-1 h-4 w-4" />
+                    </button>
+                    {activeDropdown === 'accessories' && (
+                      <div className="pl-4 pt-2 space-y-2">
+                        <Link href="/accessories/bags" className="block text-gray-600 hover:text-gray-900">Bags</Link>
+                        <Link href="/accessories/jewelry" className="block text-gray-600 hover:text-gray-900">Jewelry</Link>
+                        <Link href="/accessories/shoes" className="block text-gray-600 hover:text-gray-900">Shoes</Link>
+                        <Link href="/accessories/watches" className="block text-gray-600 hover:text-gray-900">Watches</Link>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Sale */}
+                  <div>
+                    <button 
+                      onClick={() => toggleDropdown('sale')}
+                      className="flex items-center justify-between w-full text-gray-600 hover:text-gray-900 py-2"
+                    >
+                      Sale <ChevronDown className="ml-1 h-4 w-4" />
+                    </button>
+                    {activeDropdown === 'sale' && (
+                      <div className="pl-4 pt-2 space-y-2">
+                        <Link href="/sale/clearance" className="block text-gray-600 hover:text-gray-900">Clearance</Link>
+                        <Link href="/sale/last-chance" className="block text-gray-600 hover:text-gray-900">Last Chance</Link>
+                        <Link href="/sale/special-offers" className="block text-gray-600 hover:text-gray-900">Special Offers</Link>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </nav>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Search Overlay */}
-      {searchOpen && (
-        <div className="fixed top-16 left-0 right-0 bg-white shadow-lg z-50 p-4">
-          <div className="container mx-auto max-w-4xl">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search for products..."
-                className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
-              />
-              <button 
-                onClick={() => setSearchOpen(false)}
-                className="absolute right-3 top-1/2 -translate-y-1/2"
-              >
-                <div className="h-5 w-5 text-gray-400 hover:text-gray-600" />
-              </button>
-            </div>
-          </div>
+      {/* Permanent Search Bar */}
+      <div className="fixed top-16 left-0 right-0 bg-white shadow-sm z-40 p-4">
+        <div className="container mx-auto max-w-4xl">
+          <form className="relative">
+            <input
+              type="text"
+              placeholder="Search for products..."
+              className="w-full px-4 py-3 text-black border border-gray-200 rounded-lg focus:outline-none focus:border-gray-400"
+            />
+          </form>
         </div>
-      )}
+      </div>
 
-      {/* Add margin-top to account for fixed header */}
-      <div className="pt-16">
+      {/* Add margin-top to account for fixed header and search bar */}
+      <div className="pt-32">
         {/* Hero Section */}
         <section className="relative h-[600px] flex items-center justify-center">
           <Image
@@ -322,17 +430,15 @@ export default function Homepage() {
 
           {/* Footer */}
           <footer className="bg-gray-800 text-white py-12">
-            <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8 py-8">
               <div>
-                <h3 className="text-lg font-semibold mb-4">About Us</h3>
-                <p className="text-gray-400">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold mb-4">Customer Service</h3>
+                <h3 className="text-lg font-semibold mb-4">Help</h3>
                 <ul className="space-y-2">
+                  <li><Link href="#" className="text-gray-400 hover:text-white">Customer Service</Link></li>
+                  <li><Link href="#" className="text-gray-400 hover:text-white">Track Order</Link></li>
+                  <li><Link href="#" className="text-gray-400 hover:text-white">Return & Exchanges</Link></li>
+                  <li><Link href="#" className="text-gray-400 hover:text-white">Shipping</Link></li>
                   <li><Link href="#" className="text-gray-400 hover:text-white">Contact Us</Link></li>
-                  <li><Link href="#" className="text-gray-400 hover:text-white">FAQs</Link></li>
-                  <li><Link href="#" className="text-gray-400 hover:text-white">Shipping & Returns</Link></li>
                 </ul>
               </div>
               <div>
@@ -343,12 +449,19 @@ export default function Homepage() {
                   <li><Link href="#" className="text-gray-400 hover:text-white">Blog</Link></li>
                 </ul>
               </div>
-              <div>
+              <div className="md:col-span-2">
                 <h3 className="text-lg font-semibold mb-4">Newsletter</h3>
-                <p className="text-gray-400 mb-4">Subscribe to our newsletter for the latest updates and offers.</p>
-                <form className="flex">
-                  <input type="email" placeholder="Your email" className="flex-grow px-4 py-2 rounded-l-lg" />
-                  <button type="submit" className="bg-white text-gray-800 px-4 py-2 rounded-r-lg font-semibold hover:bg-gray-100 transition duration-300">
+                <p className="text-gray-400 mb-4 max-w-md">Subscribe to our newsletter for the latest updates and offers.</p>
+                <form className="flex flex-col sm:flex-row gap-2 sm:gap-0 max-w-md">
+                  <input 
+                    type="email" 
+                    placeholder="Your email" 
+                    className="flex-grow px-4 py-2 rounded-lg sm:rounded-r-none border border-gray-300 focus:outline-none focus:border-gray-500" 
+                  />
+                  <button 
+                    type="submit" 
+                    className="bg-white text-gray-800 px-6 py-2 rounded-lg sm:rounded-l-none border border-gray-300 font-semibold hover:bg-gray-100 transition duration-300"
+                  >
                     Subscribe
                   </button>
                 </form>
