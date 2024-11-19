@@ -23,6 +23,15 @@ interface CartStore {
   total: number
 }
 
+const calculateTotals = (items: CartItem[]) => {
+  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  const shipping = subtotal > 100 ? 0 : 10
+  const tax = subtotal * 0.1 // 10% tax
+  const total = subtotal + shipping + tax
+
+  return { subtotal, shipping, tax, total }
+}
+
 export const useCart = create<CartStore>()(
   persist(
     (set, get) => ({
@@ -33,43 +42,47 @@ export const useCart = create<CartStore>()(
             (i) => i.id === item.id && i.size === item.size && i.color === item.color
           )
 
-          if (existingItem) {
-            return {
-              items: state.items.map((i) =>
+          const newItems = existingItem
+            ? state.items.map((i) =>
                 i.id === item.id && i.size === item.size && i.color === item.color
                   ? { ...i, quantity: i.quantity + item.quantity }
                   : i
-              ),
-            }
-          }
+              )
+            : [...state.items, item]
 
-          return { items: [...state.items, item] }
+          return {
+            items: newItems,
+            ...calculateTotals(newItems)
+          }
         })
       },
       removeItem: (itemId) =>
-        set((state) => ({
-          items: state.items.filter((item) => item.id !== itemId),
-        })),
+        set((state) => {
+          const newItems = state.items.filter((item) => item.id !== itemId)
+          return {
+            items: newItems,
+            ...calculateTotals(newItems)
+          }
+        }),
       updateQuantity: (itemId, quantity) =>
-        set((state) => ({
-          items: state.items.map((item) =>
+        set((state) => {
+          const newItems = state.items.map((item) =>
             item.id === itemId ? { ...item, quantity } : item
-          ),
-        })),
-      clearCart: () => set({ items: [] }),
-      get subtotal() {
-        return get().items.reduce((total, item) => total + item.price * item.quantity, 0)
-      },
-      get shipping() {
-        const subtotal = get().subtotal
-        return subtotal > 100 ? 0 : 10 // Free shipping over $100
-      },
-      get tax() {
-        return get().subtotal * 0.1 // 10% tax
-      },
-      get total() {
-        return get().subtotal + get().shipping + get().tax
-      },
+          )
+          return {
+            items: newItems,
+            ...calculateTotals(newItems)
+          }
+        }),
+      clearCart: () =>
+        set({
+          items: [],
+          subtotal: 0,
+          shipping: 0,
+          tax: 0,
+          total: 0
+        }),
+      ...calculateTotals([]) // Initialize with empty cart
     }),
     {
       name: 'cart-storage',

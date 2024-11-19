@@ -187,7 +187,7 @@ export default function Homepage() {
             <div className="hidden md:flex items-center space-x-4">
               <Link
                 href="/cart"
-                className="relative p-2 hover:bg-black rounded-full transition-colors"
+                className="relative p-2 hover:bg-gray-700 rounded-full transition-colors"
               >
                 <ShoppingCart className="h-6 w-6" />
                 {items.length > 0 && (
@@ -390,7 +390,7 @@ export default function Homepage() {
                     className="object-cover transition-transform duration-300 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                    <h3 className="text-white text-2xl font-bold text-black">
+                    <h3 className="text-white text-2xl font-bold ">
                       {[
                         "Women's Fashion",
                         "Men's Collection",
@@ -447,7 +447,7 @@ export default function Homepage() {
 
           {/* Scrolling Banner */}
           <section className="mb-12 overflow-hidden banner-container">
-            <h2 className="text-3xl font-bold mb-8 text-left pl-4 text-red-700 text-black">Flash Deals</h2>
+            <h2 className="text-3xl font-bold mb-8 text-left pl-4 text-red-700 ">Flash Deals</h2>
             <div className="relative flex w-[200%]">
               <div className="flex animate-scroll">
                 {[1, 2, 3, 4, 5].map((item) => (
@@ -466,10 +466,10 @@ export default function Homepage() {
                       className="object-cover rounded-lg hover:scale-105 transition-transform duration-300 h-40" 
                     />
                     <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-end p-4 rounded-lg opacity-100 group-hover:opacity-100 transition-opacity">
-                      <p className="text-white font-semibold text-black">Limited Time Offer</p>
+                      <p className="text-white font-semibold ">Limited Time Offer</p>
                       <div className="flex items-center gap-2">
-                        <span className="text-red-500 font-bold text-xl text-black">$99.99</span>
-                        <span className="text-gray-300 line-through text-sm text-black">$199.99</span>
+                        <span className="text-red-500 font-bold text-xl ">$99.99</span>
+                        <span className="text-gray-300 line-through text-sm ">$199.99</span>
                       </div>
                     </div>
                   </div>
@@ -492,10 +492,10 @@ export default function Homepage() {
                       className="object-cover rounded-lg hover:scale-105 transition-transform duration-300 h-40" 
                     />
                     <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-end p-4 rounded-lg opacity-100 group-hover:opacity-100 transition-opacity">
-                      <p className="text-white font-semibold text-black">Limited Time Offer</p>
+                      <p className="text-white font-semibold ">Limited Time Offer</p>
                       <div className="flex items-center gap-2">
-                        <span className="text-red-500 font-bold text-xl text-black">$99.99</span>
-                        <span className="text-gray-300 line-through text-sm text-black">$199.99</span>
+                        <span className="text-red-500 font-bold text-xl ">$99.99</span>
+                        <span className="text-gray-300 line-through text-sm ">$199.99</span>
                       </div>
                     </div>
                   </div>
@@ -528,54 +528,56 @@ export default function Homepage() {
                         </button>
                       </div>
                     </div>
-                    <div className="p-4">
-                      <h3 className="text-lg font-semibold text-black">{product.name}</h3>
-                      <p className="text-gray-700 mb-2 text-black">${product.price.toFixed(2)}</p>
-                      <p className="text-sm text-gray-700 mb-4 text-black">{product.description}</p>
+                    <div className="p-4 flex flex-col h-[420px]">
+                      <div className="flex-grow">
+                        <h3 className="text-lg font-semibold text-black">{product.name}</h3>
+                        <p className="text-gray-700 mb-2 ">${product.price.toFixed(2)}</p>
+                        <p className="text-sm text-gray-700 mb-4  line-clamp-2">{product.description}</p>
                       
-                      {/* Size Selection */}
-                      <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700 mb-2 text-black">Size</label>
-                        <div className="flex flex-wrap gap-2">
-                          {product.availableSizes.map((size) => (
-                            <button
-                              key={size}
-                              onClick={() => handleVariantSelect(product.id, 'size', size)}
-                              className={`px-3 py-1 text-sm rounded-md border ${
-                                selectedVariants[product.id]?.size === size
-                                  ? 'border-black bg-black text-white'
-                                  : 'border-gray-700 hover:border-gray-800 text-black'
-                              }`}
-                            >
-                              {size}
-                            </button>
-                          ))}
+                        {/* Size Selection */}
+                        <div className="mb-4">
+                          <label className="block text-sm font-medium text-gray-700 mb-2 ">Size</label>
+                          <div className="flex flex-wrap gap-2">
+                            {product.availableSizes.map((size) => (
+                              <button
+                                key={size}
+                                onClick={() => handleVariantSelect(product.id, 'size', size)}
+                                className={`px-3 py-1 text-sm rounded-md border ${
+                                  selectedVariants[product.id]?.size === size
+                                    ? 'border-black bg-black text-white'
+                                    : 'border-gray-700 hover:border-gray-800 '
+                                }`}
+                              >
+                                {size}
+                              </button>
+                            ))}
+                          </div>
                         </div>
-                      </div>
 
-                      {/* Color Selection */}
-                      <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700 mb-2 text-black">Color</label>
-                        <div className="flex flex-wrap gap-2">
-                          {product.availableColors.map((color) => (
-                            <button
-                              key={color}
-                              onClick={() => handleVariantSelect(product.id, 'color', color)}
-                              className={`w-8 h-8 rounded-full border-2 ${
-                                selectedVariants[product.id]?.color === color
-                                  ? 'ring-2 ring-black ring-offset-2'
-                                  : 'border-gray-700 hover:border-gray-800'
-                              }`}
-                              style={{ backgroundColor: colorOptions[color as keyof typeof colorOptions] }}
-                              title={color}
-                            />
-                          ))}
+                        {/* Color Selection */}
+                        <div className="mb-4">
+                          <label className="block text-sm font-medium text-gray-700 mb-2 ">Color</label>
+                          <div className="flex flex-wrap gap-2">
+                            {product.availableColors.map((color) => (
+                              <button
+                                key={color}
+                                onClick={() => handleVariantSelect(product.id, 'color', color)}
+                                className={`w-8 h-8 rounded-full border-2 ${
+                                  selectedVariants[product.id]?.color === color
+                                    ? 'ring-2 ring-black ring-offset-2'
+                                    : 'border-gray-700 hover:border-gray-800'
+                                }`}
+                                style={{ backgroundColor: colorOptions[color as keyof typeof colorOptions] }}
+                                title={color}
+                              />
+                            ))}
+                          </div>
                         </div>
                       </div>
 
                       <button
                         onClick={() => handleAddToCart(product)}
-                        className="w-full bg-black text-white py-2 rounded-lg font-semibold hover:bg-gray-800 transition duration-300"
+                        className="w-full bg-black text-white py-2 rounded-lg font-semibold hover:bg-gray-800 transition duration-300 mt-auto"
                       >
                         Add to Cart
                       </button>
@@ -590,7 +592,7 @@ export default function Homepage() {
           <footer className="bg-gray-800 text-white py-12">
             <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8 py-8">
               <div>
-                <h3 className="text-lg font-semibold mb-4 text-black">Help</h3>
+                <h3 className="text-lg font-semibold mb-4 text-white">Help</h3>
                 <ul className="space-y-2">
                   <li><Link href="#" className="text-gray-400 hover:text-white">Customer Service</Link></li>
                   <li><Link href="#" className="text-gray-400 hover:text-white">Track Order</Link></li>
@@ -600,7 +602,7 @@ export default function Homepage() {
                 </ul>
               </div>
               <div>
-                <h3 className="text-lg font-semibold mb-4 text-black">Quick Links</h3>
+                <h3 className="text-lg font-semibold mb-4 text-white">Quick Links</h3>
                 <ul className="space-y-2">
                   <li><Link href="#" className="text-gray-400 hover:text-white">Shop</Link></li>
                   <li><Link href="#" className="text-gray-400 hover:text-white">About</Link></li>
@@ -608,8 +610,8 @@ export default function Homepage() {
                 </ul>
               </div>
               <div className="md:col-span-2">
-                <h3 className="text-lg font-semibold mb-4 text-black">Newsletter</h3>
-                <p className="text-gray-400 mb-4 max-w-md text-black">Subscribe to our newsletter for the latest updates and offers.</p>
+                <h3 className="text-lg font-semibold mb-4 text-white">Newsletter</h3>
+                <p className="text-gray-400 mb-4 max-w-md ">Subscribe to our newsletter for the latest updates and offers.</p>
                 <form className="flex flex-col sm:flex-row gap-2 sm:gap-0 max-w-md" suppressHydrationWarning>
                   <input 
                     type="email" 
@@ -619,7 +621,7 @@ export default function Homepage() {
                   />
                   <button 
                     type="submit" 
-                    className="bg-white text-gray-800 px-6 py-2 rounded-lg sm:rounded-l-none border border-gray-300 font-semibold hover:bg-gray-100 transition duration-300 text-black"
+                    className="bg-white px-6 py-2 rounded-lg sm:rounded-l-none border border-gray-300 font-semibold hover:bg-gray-100 transition duration-300 text-black"
                     suppressHydrationWarning
                   >
                     Subscribe
