@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Search, ShoppingCart, User, ChevronDown } from 'lucide-react'
+import { ShoppingCart, User, ChevronDown } from 'lucide-react'
 
 export default function Homepage() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
@@ -26,6 +26,7 @@ export default function Homepage() {
                 <button 
                   onClick={() => toggleDropdown('women')}
                   className="flex items-center text-gray-600 hover:text-gray-900 py-4"
+                  suppressHydrationWarning
                 >
                   Women <ChevronDown className="ml-1 h-4 w-4" />
                 </button>
@@ -44,6 +45,7 @@ export default function Homepage() {
                 <button 
                   onClick={() => toggleDropdown('men')}
                   className="flex items-center text-gray-600 hover:text-gray-900 py-4"
+                  suppressHydrationWarning
                 >
                   Men <ChevronDown className="ml-1 h-4 w-4" />
                 </button>
@@ -62,6 +64,7 @@ export default function Homepage() {
                 <button 
                   onClick={() => toggleDropdown('accessories')}
                   className="flex items-center text-gray-600 hover:text-gray-900 py-4"
+                  suppressHydrationWarning
                 >
                   Accessories <ChevronDown className="ml-1 h-4 w-4" />
                 </button>
@@ -80,6 +83,7 @@ export default function Homepage() {
                 <button 
                   onClick={() => toggleDropdown('sale')}
                   className="flex items-center text-gray-600 hover:text-gray-900 py-4"
+                  suppressHydrationWarning
                 >
                   Sale <ChevronDown className="ml-1 h-4 w-4" />
                 </button>
@@ -100,7 +104,7 @@ export default function Homepage() {
               <Link href="/cart" className="text-gray-600 hover:text-gray-900">
                 <ShoppingCart className="h-6 w-6" />
               </Link>
-              <button className="text-gray-600 hover:text-gray-900">
+              <button className="text-gray-600 hover:text-gray-900" suppressHydrationWarning>
                 <User className="h-6 w-6" />
               </button>
             </div>
@@ -154,6 +158,7 @@ export default function Homepage() {
                     <button 
                       onClick={() => toggleDropdown('women')}
                       className="flex items-center justify-between w-full text-gray-600 hover:text-gray-900 py-2"
+                      suppressHydrationWarning
                     >
                       Women <ChevronDown className="ml-1 h-4 w-4" />
                     </button>
@@ -172,6 +177,7 @@ export default function Homepage() {
                     <button 
                       onClick={() => toggleDropdown('men')}
                       className="flex items-center justify-between w-full text-gray-600 hover:text-gray-900 py-2"
+                      suppressHydrationWarning
                     >
                       Men <ChevronDown className="ml-1 h-4 w-4" />
                     </button>
@@ -190,6 +196,7 @@ export default function Homepage() {
                     <button 
                       onClick={() => toggleDropdown('accessories')}
                       className="flex items-center justify-between w-full text-gray-600 hover:text-gray-900 py-2"
+                      suppressHydrationWarning
                     >
                       Accessories <ChevronDown className="ml-1 h-4 w-4" />
                     </button>
@@ -208,6 +215,7 @@ export default function Homepage() {
                     <button 
                       onClick={() => toggleDropdown('sale')}
                       className="flex items-center justify-between w-full text-gray-600 hover:text-gray-900 py-2"
+                      suppressHydrationWarning
                     >
                       Sale <ChevronDown className="ml-1 h-4 w-4" />
                     </button>
@@ -229,11 +237,12 @@ export default function Homepage() {
       {/* Permanent Search Bar */}
       <div className="fixed top-16 left-0 right-0 bg-white shadow-sm z-40 p-4">
         <div className="container mx-auto max-w-4xl">
-          <form className="relative">
+          <form className="relative" suppressHydrationWarning>
             <input
               type="text"
               placeholder="Search for products..."
               className="w-full px-4 py-3 text-black border border-gray-200 rounded-lg focus:outline-none focus:border-gray-400"
+              suppressHydrationWarning
             />
           </form>
         </div>
@@ -452,15 +461,17 @@ export default function Homepage() {
               <div className="md:col-span-2">
                 <h3 className="text-lg font-semibold mb-4">Newsletter</h3>
                 <p className="text-gray-400 mb-4 max-w-md">Subscribe to our newsletter for the latest updates and offers.</p>
-                <form className="flex flex-col sm:flex-row gap-2 sm:gap-0 max-w-md">
+                <form className="flex flex-col sm:flex-row gap-2 sm:gap-0 max-w-md" suppressHydrationWarning>
                   <input 
                     type="email" 
                     placeholder="Your email" 
-                    className="flex-grow px-4 py-2 rounded-lg sm:rounded-r-none border border-gray-300 focus:outline-none focus:border-gray-500" 
+                    className="flex-grow px-4 py-2 rounded-lg sm:rounded-r-none border border-gray-300 focus:outline-none focus:border-gray-500"
+                    suppressHydrationWarning
                   />
                   <button 
                     type="submit" 
                     className="bg-white text-gray-800 px-6 py-2 rounded-lg sm:rounded-l-none border border-gray-300 font-semibold hover:bg-gray-100 transition duration-300"
+                    suppressHydrationWarning
                   >
                     Subscribe
                   </button>
